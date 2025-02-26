@@ -1,14 +1,14 @@
-CREATE DATABASE condominio;
+CREATE DATABASE sistema_condominio;
 
-USE condominio;
+USE sistema_condominio;
 
-CREATE TABLE usuarios (
+CREATE TABLE tab_usuarios (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(50) NOT NULL,
     senha VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE moradores (
+CREATE TABLE tab_moradores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     rg VARCHAR(20) NOT NULL,
@@ -19,4 +19,3 @@ CREATE TABLE moradores (
     email VARCHAR(255) NOT NULL,
     telefone VARCHAR(20) NOT NULL
 );
-

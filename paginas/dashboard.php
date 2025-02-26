@@ -31,22 +31,22 @@ if (!isset($_SESSION['usuario'])) {
                 <!-- Alinhamento à esquerda -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="moradores.php"><i class="bi bi-people-fill"></i> Moradores</a>
+                        <a class="nav-link" href="formMoradores.php"><i class="bi bi-people-fill"></i> Moradores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="correspondencias.php"><i class="bi bi-envelope-open-fill"></i> Correspondências</a>
+                        <a class="nav-link" href="formCorrespondencias.php"><i class="bi bi-envelope-open-fill"></i> Correspondências</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="reservas.php"><i class="bi bi-calendar-event-fill"></i> Reservas</a>
+                        <a class="nav-link" href="formReservas.php"><i class="bi bi-calendar-event-fill"></i> Reservas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="servicos.php"><i class="bi bi-wrench-adjustable"></i> Prestação de Serviços</a>
+                        <a class="nav-link" href="formServicos.php"><i class="bi bi-wrench-adjustable"></i> Prestação de Serviços</a>
                     </li>
                 </ul>
                 <!-- Alinhamento à direita -->
                 <span class="navbar-text ms-auto">
                     Logado: <?php echo htmlspecialchars($_SESSION['usuario']);?> | 
-                    <a href="../conexoes/logout.php" class="text-light text-decoration-none">Sair</a>
+                    <a href="conexoes/logout.php" class="text-light text-decoration-none">Sair</a>
                 </span>
             </div>
         </div>

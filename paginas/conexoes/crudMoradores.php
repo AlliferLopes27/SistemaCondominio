@@ -1,5 +1,5 @@
 <?php
-    include_once('db.php');
+    include_once('conexao.php');
 
     $nome="";
     $rg="";
@@ -15,7 +15,7 @@
 
 // Buscar todos os moradores cadastrados para exibição na tabela
 try {
-    $sql = $conn->query('SELECT id, nome, apartamento, bloco FROM moradores');
+    $sql = $conn->query('SELECT id, nome, apartamento, bloco FROM tab_moradores');
     $moradores = $sql->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $erro) {
     $mensagem = $erro->getMessage();
@@ -26,7 +26,7 @@ if ($_POST) {
     if (isset($_POST['btoPesquisar'])) {
         
         try {
-            $sql = $conn->query('select * from moradores where id='.$_POST['txtPesquisar']);
+            $sql = $conn->query('select * from tab_moradores where id='.$_POST['txtPesquisar']);
 
             if ($sql->rowCount() > 0) {
                 foreach ($sql as $linha) {
@@ -57,7 +57,7 @@ if ($_POST) {
 
         try {
             $sql = $conn->prepare('
-                insert into moradores
+                insert into tab_moradores
                     (nome,rg,cpf,nascimento,apartamento,bloco,email,telefone)
                 values
                     (:nome,:rg,:cpf,:nascimento,:apartamento,:bloco,:email,:telefone)
@@ -83,11 +83,11 @@ if ($_POST) {
         }
     }
     // Atualizar os dados do morador
-    elseif (isset($_POST['btoAtualizar'])){
+    elseif (isset($_POST['btoAlterar'])){
 
         try {
             $sql = $conn->prepare('
-                update moradores set
+                update tab_moradores set
                     nome=:nome,
                     rg=:rg,
                     cpf=:cpf,
@@ -123,12 +123,12 @@ if ($_POST) {
     elseif (isset($_POST['btoExcluir'])) {
         
         try {
-            $sql = $conn->prepare('delete from moradores where id=:id');
+            $sql = $conn->prepare('delete from tab_moradores where id=:id');
 
             $sql->execute(array(':id'=>$_POST['txtPesquisar']));
 
             if ($sql->rowCount() > 0) {
-                $mensagem='<p>Morador excluido com sucesso</p>';
+                $mensagem='<p>Dados excluidos com sucesso</p>';
             }
 
         } catch (PDOException $erro) {

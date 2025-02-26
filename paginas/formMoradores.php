@@ -20,7 +20,7 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
     <?php
-        include_once('../conexoes/crud_moradores.php');
+        include_once('conexoes/crudMoradores.php');
     ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -35,22 +35,22 @@ if (!isset($_SESSION['usuario'])) {
                 <!-- Alinhamento à esquerda -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="moradores.php"><i class="bi bi-people-fill"></i> Moradores</a>
+                        <a class="nav-link" href="formMoradores.php"><i class="bi bi-people-fill"></i> Moradores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="correspondencias.php"><i class="bi bi-envelope-open-fill"></i> Correspondências</a>
+                        <a class="nav-link" href="formCorrespondencias.php"><i class="bi bi-envelope-open-fill"></i> Correspondências</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="reservas.php"><i class="bi bi-calendar-event-fill"></i> Reservas</a>
+                        <a class="nav-link" href="formReservas.php"><i class="bi bi-calendar-event-fill"></i> Reservas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="servicos.php"><i class="bi bi-wrench-adjustable"></i> Prestação de Serviços</a>
+                        <a class="nav-link" href="formServicos.php"><i class="bi bi-wrench-adjustable"></i> Prestação de Serviços</a>
                     </li>
                 </ul>
                 <!-- Alinhamento à direita -->
                 <span class="navbar-text ms-auto">
                     Logado: <?php echo htmlspecialchars($_SESSION['usuario']);?> | 
-                    <a href="../conexoes/logout.php" class="text-light text-decoration-none">Sair</a>
+                    <a href="conexoes/logout.php" class="text-light text-decoration-none">Sair</a>
                 </span>
             </div>
         </div>
@@ -63,7 +63,7 @@ if (!isset($_SESSION['usuario'])) {
                     <h1><i class="bi bi-people-fill"></i> Moradores</h1>
                 </div>
                 <form action="" method="post" id="moradorForm">
-                    <div class="row mb-3">
+                    <div class="row">
                         <div class="col-sm-5 mt-2">
                             <label for="txtNome" class="form-label">Nome:</label>
                             <input type="text" class="form-control" id="txtNome" name="txtNome" placeholder="Digite o nome completo" value="<?= htmlspecialchars($nome) ?>" required>
@@ -109,14 +109,9 @@ if (!isset($_SESSION['usuario'])) {
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-sm-12 text-center">
-                            <p><?= $mensagem ?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input type="number" class="form-control" id="txtPesquisar" name="txtPesquisar" placeholder="Pesquisar" value="<?= $codigo ?>">
+                                <input type="number" class="form-control" id="txtPesquisar" name="txtPesquisar" placeholder="Pesquisar" value="<?= htmlspecialchars($codigo) ?>">
                                 <button class="btn btn-dark" name="btoPesquisar"><i class="bi bi-search"></i></button>
                             </div>
                         </div>
@@ -130,7 +125,8 @@ if (!isset($_SESSION['usuario'])) {
                                         <th>Nome</th>
                                         <th>Apto</th>
                                         <th>Bloco</th>
-                                        <th>Ações</th>
+                                        <th>Alterar</th>
+                                        <th>Excluir</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -141,7 +137,9 @@ if (!isset($_SESSION['usuario'])) {
                                         <td><?php echo $morador['apartamento']; ?></td>
                                         <td><?php echo $morador['bloco']; ?></td>
                                         <td>
-                                            <button class="btn btn-sm btn-warning" name="btoAtualizar"><i class="bi bi-arrow-repeat"></i> Atualizar</button>
+                                            <button class="btn btn-sm btn-warning" name="btoAlterar"><i class="bi bi-arrow-repeat"></i> Alterar</button>
+                                        </td>
+                                        <td>
                                             <button class="btn btn-sm btn-danger" name="btoExcluir"><i class="bi bi-trash3"></i> Excluir</button>
                                         </td>
                                     </tr>
@@ -150,112 +148,41 @@ if (!isset($_SESSION['usuario'])) {
                             </table>
                         </div>
                     </div>
+                    <div class="modal fade" id="mensagemModal" tabindex="-1" aria-labelledby="mensagemModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="mensagemModalLabel">Mensagem</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="mensagemContent"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
     <script>
-        // Função para formatar o RG
-        function formatarRG(input) {
-            let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-            // Limitar a quantidade de caracteres no campo para RG (9 dígitos)
-            if (valor.length > 9) {
-            valor = valor.substring(0, 9); // Limita para 9 caracteres
-            }
-            // Formatar como RG (XX.XXX.XXX-X)
-            if (valor.length <= 9) {
-            valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, '$1.$2.$3-$4'); // Formato XX.XXX.XXX-X
-            }
-
-            input.value = valor;
-        }
-
-        // Função para formatar o CPF
-        function formatarCPF(input) {
-            let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-            // Limitar a quantidade de caracteres no campo para CPF (11 dígitos)
-            if (valor.length > 11) {
-            valor = valor.substring(0, 11); // Limita para 11 caracteres
-            }
-            // Formatar como CPF (XXX.XXX.XXX-XX)
-            if (valor.length <= 11) {
-            valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-            }
-
-            input.value = valor;
-        }
-        // Função para formatar o Telefone com 11 dígitos
-        function formatarTelefone(input) {
-            let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-            // Limitar a quantidade de caracteres no campo para Telefone (11 dígitos)
-            if (valor.length > 11) {
-            valor = valor.substring(0, 11); // Limita para 11 caracteres
-            }
-            // Formatar como telefone (XX) XXXXX-XXXX
-            if (valor.length === 11) {
-            valor = valor.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
-            }
-
-            input.value = valor;
-        }
-        // Função para limitar no máximo em 3 números
-        function limitarNúmero(input) {
-            let valor = input.value;
-            // Limitar o valor a no máximo 3 dígitos
-            if (valor.length > 3) {
-            input.value = valor.substring(0, 3);  // Restringe para 3 dígitos
-            }
-        }
+        <?php if (!empty($mensagem)): ?>
+            window.onload = function() {
+                // Passa a mensagem para o modal
+                document.getElementById('mensagemContent').innerHTML = '<?php echo $mensagem; ?>';
+                // Exibe o modal
+                var myModal = new bootstrap.Modal(document.getElementById('mensagemModal'));
+                myModal.show();
+            };
+        <?php endif; ?>
     </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("moradorForm");
-            // Captura os botões
-            const botaoPesquisar = document.querySelector("button[name='btoPesquisar']");
-            const botaoAdicionar = document.querySelector("button[name='btoAdicionar']");
-            const botaoAtualizar = document.querySelector("button[name='btoAtualizar']");
-            const botaoExcluir = document.querySelector("button[name='btoExcluir']");
-            const botaoLimpar = document.querySelector("button[name='btoLimpar']");
-            // Captura o campo de pesquisa
-            const campoPesquisar = document.getElementById("txtPesquisar");
-            // Função para remover required dos campos
-            function removerRequired() {
-                document.querySelectorAll("input[required]").forEach(input => {
-                    input.removeAttribute("required");
-                });
-            }
-            // Validar o campo antes de pesquisar
-            botaoPesquisar.addEventListener("click", function (event) {
-                if (campoPesquisar.value.trim() === "") {
-                    event.preventDefault(); // Impede o envio do formulário se estiver vazio
-                    alert("Digite um ID antes de pesquisar!"); // Opcional: mostrar um alerta para o usuário
-                } else {
-                    removerRequired(); // Remove required para evitar problemas
-                    form.submit();
-                }
-            });     
-            // Adicionar required no botão Adicionar
-            botaoAdicionar.addEventListener("click", function () {
-                form.querySelectorAll("input").forEach(input => input.setAttribute("required", "true"));
-                campoPesquisar.removeAttribute("required"); // Remove o 'required' temporariamente
-            });
-            // Adicionar required no botão Atualizar
-            botaoAtualizar.addEventListener("click", function () {
-                form.querySelectorAll("input").forEach(input => input.setAttribute("required", "true"));
-            });
-            // Adicionar required no botão Excluir
-            botaoExcluir.addEventListener("click", function () {
-                form.querySelectorAll("input").forEach(input => input.setAttribute("required", "true"));
-            });
-            // Remover required ao Limpar
-            botaoLimpar.addEventListener("click", function () {
-                removerRequired();
-            });     
-        });
-    </script>
-
+    <script src="javascript/validation.js"></script>
+    <script src="javascript/manipulation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

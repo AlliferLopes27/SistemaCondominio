@@ -15,7 +15,7 @@
                 <div class="mt-4 mb-4 text-center">
                     <h1>Login</h1>
                 </div>
-                <form action="../conexoes/login.php" method="post">
+                <form action="conexoes/login.php" method="post">
                     <div class="mb-3">
                         <label for="txtUsuario" class="form-label">Usuário</label>
                         <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" required>
@@ -45,22 +45,7 @@
         </div>
     </div>
 
-    <script>
-        function togglePasswordVisibility() {
-            const passwordField = document.getElementById('txtSenha');
-            const togglePasswordIcon = document.getElementById('togglePasswordIcon');
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                togglePasswordIcon.classList.remove('bi-eye');
-                togglePasswordIcon.classList.add('bi-eye-slash');
-            } else {
-                passwordField.type = 'password';
-                togglePasswordIcon.classList.remove('bi-eye-slash');
-                togglePasswordIcon.classList.add('bi-eye');
-            }
-        }
-    </script>
-
+    <script src="javascript/password.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

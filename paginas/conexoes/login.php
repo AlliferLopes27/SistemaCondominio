@@ -6,12 +6,12 @@
         $senha = $_POST['txtSenha'];
 
         // Conectar ao banco de dados
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "condominio";
+        $host="localhost";
+        $bd="sistema_condominio";
+        $user="root";
+        $pass="";
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        $conn = new mysqli($host, $user, $password, $bd);
 
         // Verificar a conexão
         if ($conn->connect_error) {
@@ -19,16 +19,16 @@
         }
 
         // Verificar as credenciais do usuário
-        $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND senha = '$senha'";
+        $sql = "SELECT * FROM tab_usuarios WHERE usuario = '$usuario' AND senha = '$senha'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Usuário autenticado com sucesso
             $_SESSION['usuario'] = $usuario;
-            header("Location: ../paginas/dashboard.php");
+            header("Location: ../dashboard.php");
         } else {
             // Usuário ou senha inválidos
-            header("Location: ../paginas/index.php?erro=1");
+            header("Location: ../index.php?erro=1");
         }
 
         $conn->close();
