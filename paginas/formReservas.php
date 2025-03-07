@@ -62,9 +62,75 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="mt-4 mb-4 text-center">
                     <h1><i class="bi bi-calendar-event-fill"></i> Reservas</h1>
                 </div>
-                <form action="" method="post" id="moradorForm">
+                <form action="formReservas.php" method="post">
                     <div class="row">
-
+                        <div class="col-sm-5 mt-2">
+                            <label for="txtMoradores" class="form-label">Moradores:</label>
+                            <select class="form-select" id="txtMoradores" name="txtMoradores" required>
+                                <option selected></option>
+                                <?php
+                                    $sql = $conn->query('SELECT id_morador, nome FROM tab_moradores');
+                                    foreach($sql as $linha){
+                                        $selected = ($linha['id_morador'] == $moradores) ? 'selected' : '';
+                                        echo "<option value='{$linha['id_morador']}' {$selected}>{$linha['nome']}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-3 mt-2">
+                            <label for="txtReserva" class="form-label">Reserva:</label>
+                            <select class="form-select" id="txtReserva" name="txtReserva" required>
+                                <option selected></option>
+                                <option value="Salão de Festa Infantil" <?= ($reserva == "Salão de Festa Infantil") ? "selected" : "" ?>>Salão de Festa Infantil</option>
+                                <option value="Salão de Festa Adulto" <?= ($reserva == "Salão de Festa Adulto") ? "selected" : "" ?>>Salão de Festa Adulto</option>
+                                <option value="Salão de Jogos" <?= ($reserva == "Salão de Jogos") ? "selected" : "" ?>>Salão de Jogos</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 mt-2">
+                            <label for="txtData" class="form-label">Data:</label>
+                            <input type="date" class="form-control" id="txtData" name="txtData" value="<?= htmlspecialchars($data_reserva) ?>" required>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-12 mt-4 text-center">
+                            <button class="btn btn-primary" name="btoReservar"><i class="bi bi-calendar-plus"></i> Reservar</button>
+                            <button class="btn btn-secondary" name="btoLimpar" onclick="window.location.href='formReservas.php?success=2'"><i class="bi bi-x-lg"></i> Limpar</button>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-12 text-center">
+                            <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+                                <div class="alert alert-success" role="alert">
+                                    Reserva concluída com sucesso!
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-sm table-secondary table-bordered border-dark">
+                                <thead>
+                                    <tr>
+                                        <th>Moradores</th>
+                                        <th>Apto</th>
+                                        <th>Bloco</th>
+                                        <th>Reserva</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($reservas as $reserva) { ?>
+                                    <tr>
+                                        <td><?php echo $reserva['moradores']; ?></td>
+                                        <td><?php echo $reserva['apto']; ?></td>
+                                        <td><?php echo $reserva['bloco']; ?></td>
+                                        <td><?php echo $reserva['reserva']; ?></td>
+                                        <td><?php echo $reserva['data_reserva']; ?></td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </form>
             </div>
