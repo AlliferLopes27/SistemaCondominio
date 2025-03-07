@@ -62,7 +62,7 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="mt-4 mb-4 text-center">
                     <h1><i class="bi bi-wrench-adjustable"></i> Prestação de Serviços</h1>
                 </div>
-                <form action="formServicos.php" method="post">
+                <form action="" method="post" id="moradorForm">
                     <div class="row">
                         
                     </div>
