@@ -3,13 +3,13 @@ CREATE DATABASE sistema_condominio;
 USE sistema_condominio;
 
 CREATE TABLE tab_usuarios (
-	id INT AUTO_INCREMENT PRIMARY KEY,
+	id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(50) NOT NULL,
-    senha VARCHAR(255) NOT NULL
+    senha VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE tab_moradores (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_morador INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     rg VARCHAR(20) NOT NULL,
     cpf VARCHAR(20) NOT NULL,
@@ -21,9 +21,17 @@ CREATE TABLE tab_moradores (
 );
 
 CREATE TABLE tab_correspondencias (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	id_moradores INT NOT NULL,
-    tipo VARCHAR(20) NOT NULL,
-    datahora DATETIME NOT NULL,
-	CONSTRAINT FK_id_moradores FOREIGN KEY (id_moradores) REFERENCES tab_moradores (id)
+	id_correspondencia INT AUTO_INCREMENT PRIMARY KEY,
+	id_moradores_correspondencia INT NOT NULL,
+    tipo VARCHAR(30) NOT NULL,
+    data_hora DATETIME NOT NULL,
+	CONSTRAINT FK_id_moradores_correspondencia FOREIGN KEY (id_moradores_correspondencia) REFERENCES tab_moradores (id_morador)
+);
+
+CREATE TABLE tab_reservas (
+	id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+	id_moradores_reserva INT NOT NULL,
+    reserva VARCHAR(30) NOT NULL,
+    data_reserva DATE NOT NULL,
+    CONSTRAINT FK_id_moradores_reserva FOREIGN KEY (id_moradores_reserva) REFERENCES tab_moradores (id_morador)
 );
