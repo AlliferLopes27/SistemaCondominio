@@ -162,7 +162,7 @@
                                 <tbody>
                                     <?php foreach ($moradores as $morador) { ?>
                                     <tr>
-                                        <td><?php echo $morador['id']; ?></td>
+                                        <td><?php echo $morador['id_morador']; ?></td>
                                         <td><?php echo $morador['nome']; ?></td>
                                         <td><?php echo $morador['apartamento']; ?></td>
                                         <td><?php echo $morador['bloco']; ?></td>
