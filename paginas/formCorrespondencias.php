@@ -21,22 +21,6 @@
 <body>
     <?php
         include_once('conexoes/crudCorrespondencias.php');
-
-        // Consulta para obter as correspondências com o nome do morador
-        $sql = $conn->query('
-            SELECT 
-                c.id,
-                m.nome AS moradores,
-                c.tipo,
-                c.datahora
-            FROM 
-                tab_correspondencias c
-            JOIN 
-                tab_moradores m 
-            ON 
-                c.id_moradores = m.id
-        ');
-        $correspondencias = $sql->fetchAll();
     ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -82,21 +66,21 @@
                     <div class="row">
                         <div class="col-sm-5 mt-2">
                             <label for="txtMoradores" class="form-label">Moradores:</label>
-                            <select class="form-select" id="txtMoradores" name="txtMoradores">
-                                <option value=""></option>
+                            <select class="form-select" id="txtMoradores" name="txtMoradores" required>
+                                <option selected></option>
                                 <?php
-                                    $sql = $conn->query('SELECT id, nome FROM tab_moradores');
+                                    $sql = $conn->query('SELECT id_morador, nome FROM tab_moradores');
                                     foreach($sql as $linha){
-                                        $selected = ($linha['id'] == $moradores) ? 'selected' : '';
-                                        echo "<option value='{$linha['id']}' {$selected}>{$linha['nome']}</option>";
+                                        $selected = ($linha['id_morador'] == $moradores) ? 'selected' : '';
+                                        echo "<option value='{$linha['id_morador']}' {$selected}>{$linha['nome']}</option>";
                                     }
                                 ?>
                             </select>
                         </div>
                         <div class="col-sm-3 mt-2">
                             <label for="txtTipo" class="form-label">Tipo:</label>
-                            <select class="form-select" id="txtTipo" name="txtTipo">
-                                <option value=""></option>
+                            <select class="form-select" id="txtTipo" name="txtTipo" required>
+                                <option selected></option>
                                 <option value="Carta" <?= ($tipo == "Carta") ? "selected" : "" ?>>Carta</option>
                                 <option value="Pacote" <?= ($tipo == "Pacote") ? "selected" : "" ?>>Pacote</option>
                                 <option value="Encomenda" <?= ($tipo == "Encomenda") ? "selected" : "" ?>>Encomenda</option>
@@ -104,7 +88,7 @@
                         </div>
                         <div class="col-sm-4 mt-2">
                             <label for="txtDatahora" class="form-label">Data/Hora:</label>
-                            <input type="datetime-local" class="form-control" id="txtDatahora" name="txtDatahora">
+                            <input type="datetime-local" class="form-control" id="txtDatahora" name="txtDatahora" value="<?= htmlspecialchars($data_hora) ?>" required>
                         </div>
                     </div>
                     <div class="row mb-4">
@@ -128,16 +112,20 @@
                                 <thead>
                                     <tr>
                                         <th>Moradores</th>
+                                        <th>Apto</th>
+                                        <th>Bloco</th>
                                         <th>Tipo</th>
                                         <th>Data/Hora</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach ($correspondencias as $correspondencia) { ?>
+                                    <?php foreach ($correspondencias as $correspondencia) { ?>
                                     <tr>
                                         <td><?php echo $correspondencia['moradores']; ?></td>
+                                        <td><?php echo $correspondencia['apto']; ?></td>
+                                        <td><?php echo $correspondencia['bloco']; ?></td>
                                         <td><?php echo $correspondencia['tipo']; ?></td>
-                                        <td><?php echo $correspondencia['datahora']; ?></td>
+                                        <td><?php echo $correspondencia['data_hora']; ?></td>
                                     </tr>
                                     <?php } ?>
                                 </tbody>
