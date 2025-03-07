@@ -86,8 +86,8 @@
                         </div>
                         <div class="col-sm-2 mt-2">
                             <label for="txtBloco" class="form-label">Bloco:</label>
-                            <select name="txtBloco" id="txtBloco" class="form-select" required>
-                                <option selected></option>
+                            <select name="txtBloco" id="txtBloco" class="form-select">
+                                <option value=""></option>
                                 <option value="A" <?= ($bloco == "A") ? "selected" : "" ?>>A</option>
                                 <option value="B" <?= ($bloco == "B") ? "selected" : "" ?>>B</option>
                                 <option value="C" <?= ($bloco == "C") ? "selected" : "" ?>>C</option>
@@ -162,7 +162,7 @@
                                 <tbody>
                                     <?php foreach ($moradores as $morador) { ?>
                                     <tr>
-                                        <td><?php echo $morador['id_morador']; ?></td>
+                                        <td><?php echo $morador['id']; ?></td>
                                         <td><?php echo $morador['nome']; ?></td>
                                         <td><?php echo $morador['apartamento']; ?></td>
                                         <td><?php echo $morador['bloco']; ?></td>
