@@ -15,7 +15,7 @@
 
     // Buscar todos os moradores cadastrados para exibição na tabela
     try {
-        $sql = $conn->query('SELECT id, nome, apartamento, bloco FROM tab_moradores');
+        $sql = $conn->query('SELECT id_morador, nome, apartamento, bloco FROM tab_moradores');
         $moradores = $sql->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $erro) {
         $mensagem = $erro->getMessage();
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Pesquisar os dados do morador    
     if (isset($_POST['btoPesquisar'])) {
         try {
-            $sql = $conn->query('SELECT * FROM tab_moradores WHERE id=' . $_POST['txtPesquisar']);
+            $sql = $conn->query('SELECT * FROM tab_moradores WHERE id_morador=' . $_POST['txtPesquisar']);
 
             if ($sql->rowCount() > 0) {
                 foreach ($sql as $linha) {
@@ -92,11 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     bloco = :bloco,
                     email = :email,
                     telefone = :telefone
-                WHERE id = :id
+                WHERE id_morador = :id_morador
             ');
 
             $sql->execute(array(
-                ':id' => $_POST['txtPesquisar'],
+                ':id_morador' => $_POST['txtPesquisar'],
                 ':nome' => $_POST['txtNome'],
                 ':rg' => $_POST['txtRg'],
                 ':cpf' => $_POST['txtCpf'],
@@ -120,9 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Excluir todos os dados do morador
     elseif (isset($_POST['btoExcluir'])) {
         try {
-            $sql = $conn->prepare('DELETE FROM tab_moradores WHERE id = :id');
+            $sql = $conn->prepare('DELETE FROM tab_moradores WHERE id_morador = :id_morador');
 
-            $sql->execute(array(':id' => $_POST['txtPesquisar']));
+            $sql->execute(array(':id_morador' => $_POST['txtPesquisar']));
 
             if ($sql->rowCount() > 0) {
                 // Redirecionar após o processamento bem-sucedido
