@@ -3,13 +3,27 @@
 
     $moradores = "";
     $tipo = "";
-    $datahora = "";
+    $data_hora = "";
     $mensagem = "";
 
     // Buscar todas as correspondências enviadas para exibição na tabela
     try {
-        $sql = $conn->query('SELECT id, tipo, datahora FROM tab_correspondencias');
-        $correspondencias = $sql->fetchAll(PDO::FETCH_ASSOC);
+        $sql = $conn->query('
+            SELECT 
+                c.id_correspondencia,
+                m.nome AS moradores,
+                m.apartamento AS apto,
+                m.bloco,
+                c.tipo,
+                c.data_hora
+            FROM 
+                tab_correspondencias c
+            JOIN 
+                tab_moradores m 
+            ON 
+                c.id_moradores_correspondencia = m.id_morador
+        ');
+        $correspondencias = $sql->fetchAll();
     } catch (PDOException $erro) {
         $mensagem = $erro->getMessage();
     }
@@ -20,15 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $sql = $conn->prepare('
                 INSERT INTO tab_correspondencias
-                    (id_moradores, tipo, datahora)
+                    (id_moradores_correspondencia, tipo, data_hora)
                 VALUES
-                    (:id_moradores, :tipo, :datahora)
+                    (:id_moradores_correspondencia, :tipo, :data_hora)
             ');
 
             $sql->execute(array(
-                ':id_moradores' => $_POST['txtMoradores'],
+                ':id_moradores_correspondencia' => $_POST['txtMoradores'],
                 ':tipo' => $_POST['txtTipo'],
-                ':datahora' => $_POST['txtDatahora']
+                ':data_hora' => $_POST['txtDatahora']
             ));
 
             if ($sql->rowCount() > 0) {
@@ -45,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     elseif (isset($_POST['btoLimpar'])) {
         $moradores = "";
         $tipo = "";
-        $datahora = "";
+        $data_hora = "";
     }
 }
 ?>
