@@ -15,8 +15,16 @@
 
     // Buscar todos os moradores cadastrados para exibição na tabela
     try {
-        $sql = $conn->query('SELECT id_morador, nome, apartamento, bloco FROM tab_moradores');
-        $moradores = $sql->fetchAll(PDO::FETCH_ASSOC);
+        $sql = $conn->query('
+            SELECT 
+                m.id_morador,
+                m.nome,
+                m.apartamento,
+                m.bloco
+            FROM 
+                tab_moradores m
+        ');
+        $moradores = $sql->fetchAll();
     } catch (PDOException $erro) {
         $mensagem = $erro->getMessage();
     }
