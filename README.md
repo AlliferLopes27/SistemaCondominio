@@ -60,4 +60,4 @@ Este é um sistema de gestão de condomínio desenvolvido com **HTML, CSS, Boots
 - **Para Laragon:**
 
 ``http://sistemacondominio.test/``
-(Caso Laragon use domínio automático, verifique no painel do programa).
+*(Caso Laragon use domínio automático, verifique no painel do programa).*
