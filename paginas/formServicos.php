@@ -62,9 +62,103 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="mt-4 mb-4 text-center">
                     <h1><i class="bi bi-wrench-adjustable"></i> Prestação de Serviços</h1>
                 </div>
-                <form action="" method="post" id="moradorForm">
+                <form action="formServicos.php" method="post">
                     <div class="row">
-                        
+                        <div class="col-sm-4 mt-2">
+                            <label for="txtServico" class="form-label">Serviço:</label>
+                            <select class="form-control" id="txtServico" name="txtServico" required>
+                                <option value="">Selecione um serviço</option>
+                                <optgroup label="Manutenção e Reparos">
+                                    <option value="Eletrica">Elétrica</option>
+                                    <option value="Hidraulica">Hidráulica</option>
+                                    <option value="Pintura">Pintura</option>
+                                    <option value="Jardinagem">Jardinagem</option>
+                                    <option value="Dedetizacao">Dedetização</option>
+                                </optgroup>
+                                <optgroup label="Serviços de Segurança">
+                                    <option value="Monitoramento">Monitoramento e Vigilância</option>
+                                    <option value="Portaria">Portaria</option>
+                                </optgroup>
+                                <optgroup label="Serviços Administrativos">
+                                    <option value="Contabilidade">Contabilidade</option>
+                                    <option value="Consultoria Juridica">Consultoria Jurídica</option>
+                                </optgroup>
+                                <optgroup label="Serviços Gerais">
+                                    <option value="Coleta de Lixo">Coleta de Lixo</option>
+                                    <option value="Lavanderia">Lavanderia</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 mt-2">
+                            <label for="txtData" class="form-label">Data:</label>
+                            <input type="date" class="form-control" id="txtData" name="txtData" required>
+                        </div>
+                        <div class="col-sm-4 mt-2">
+                            <label for="txtPrestador" class="form-label">Prestador:</label>
+                            <input type="text" class="form-control" id="txtPrestador" name="txtPrestador" required>
+                        </div>
+                        <div class="col-sm-2 mt-2">
+                            <label for="txtValor" class="form-label">Valor:</label>
+                            <input type="number" class="form-control" id="txtValor" name="txtValor" step="0.01" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 mt-2">
+                            <label for="txtDescricao" class="form-label">Descrição:</label>
+                            <textarea class="form-control" id="txtDescricao" name="txtDescricao" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-12 mt-4 text-center">
+                            <button class="btn btn-primary" name="btoAdicionar"><i class="bi bi-building-add"></i> Adicionar</button>
+                            <button class="btn btn-secondary" name="btoLimpar" onclick="window.location.href='formServicos.php?success=2'"><i class="bi bi-x-lg"></i> Limpar</button>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-12 text-center">
+                            <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+                                <div class="alert alert-success" role="alert">
+                                    Adicionado com sucesso!
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-sm table-secondary table-bordered border-dark">
+                                <thead>
+                                    <tr>
+                                        <th>Serviços</th>
+                                        <th>Prestadores</th>
+                                        <th>Data</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($servicos as $servico) { ?>
+                                    <tr>
+                                        <td><?php echo $servico['servico']; ?></td>
+                                        <td><?php echo $servico['prestador']; ?></td>
+                                        <td><?php echo $servico['data_servico']; ?></td>
+                                        <td><?php echo $servico['valor']; ?></td>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th colspan="4">Descrição</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($servicos as $servico) { ?>
+                                    <tr>
+                                        <td colspan="2"><?php echo $servico['prestador']; ?></td> 
+                                        <td colspan="2"><?php echo $servico['descricao']; ?></td> 
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </form>
             </div>
