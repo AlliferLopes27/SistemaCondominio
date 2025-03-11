@@ -35,3 +35,12 @@ CREATE TABLE tab_reservas (
     data_reserva DATE NOT NULL,
     CONSTRAINT FK_id_moradores_reserva FOREIGN KEY (id_moradores_reserva) REFERENCES tab_moradores (id_morador)
 );
+
+CREATE TABLE tab_servicos (
+    id_servico INT AUTO_INCREMENT PRIMARY KEY,
+    servico VARCHAR(255) NOT NULL,
+    data_servico DATE NOT NULL,
+    prestador VARCHAR(255) NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    descricao VARCHAR(255) NOT NULL
+);
