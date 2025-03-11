@@ -3,7 +3,7 @@
 
     $moradores = "";
     $reserva = "";
-    $datareserva = "";
+    $data_reserva = "";
     $mensagem = "";
 
     // Buscar todas as reservas enviadas para exibição na tabela
@@ -29,7 +29,7 @@
     }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Enviar mensagem ou email
+    // Adicionar uma nova reserva
     if (isset($_POST['btoReservar'])) {
         try {
             $sql = $conn->prepare('
