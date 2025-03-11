@@ -20,7 +20,7 @@ Este é um sistema de gestão de condomínio desenvolvido com **HTML, CSS, Boots
 
 ---
 
-## *Como Rodar o Projeto Localmente*
+## **Como Rodar o Projeto Localmente**
 
 1. **Clone o repositório para o seu computador:**
 
@@ -51,13 +51,13 @@ Este é um sistema de gestão de condomínio desenvolvido com **HTML, CSS, Boots
 
 - **Para XAMPP:**
 
-``http://localhost/SistemaCondominio/index.php``
+``http://localhost/SistemaCondominio/paginas/index.php``
 
 - **Para WampServer:**
 
-``http://localhost/SistemaCondominio/index.php``
+``http://localhost/SistemaCondominio/paginas/index.php``
 
 - **Para Laragon:**
 
-``http://SistemaCondominio.test/``
+``http://sistemacondominio.test/``
 (Caso Laragon use domínio automático, verifique no painel do programa).
