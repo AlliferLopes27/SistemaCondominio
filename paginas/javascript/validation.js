@@ -26,6 +26,20 @@ function formatarCPF(input) {
 
     input.value = valor;
 }
+// Função para formatar o CNPJ
+function formatarCNPJ(input) {
+    let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    // Limitar a quantidade de caracteres no campo para CNPJ (14 dígitos)
+    if (valor.length > 14) {
+    valor = valor.substring(0, 14); // Limita para 14 caracteres
+    }
+    // Formatar como CNPJ (XX.XXX.XXX/XXXX-XX)
+    if (valor.length === 14) {
+    valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    }
+
+    input.value = valor;
+}
 // Função para formatar o Telefone com 11 dígitos
 function formatarTelefone(input) {
     let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
