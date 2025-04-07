@@ -89,23 +89,29 @@ if (!isset($_SESSION['usuario'])) {
                                 </optgroup>
                             </select>
                         </div>
+                        <div class="col-sm-5 mt-2">
+                            <label for="txtPrestador" class="form-label">Prestador:</label>
+                            <input type="text" class="form-control" id="txtPrestador" name="txtPrestador" placeholder="Digite o nome do Prestador de Serviços" required>
+                        </div>
+                        <div class="col-sm-3 mt-2">
+                            <label for="txtCnpj" class="form-label">CNPJ:</label>
+                            <input type="text" class="form-control" id="txtCnpj" name="txtCnpj" placeholder="Digite o n° do CNPJ" required oninput="formatarCNPJ(this)">
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-2 mt-2">
                             <label for="txtData" class="form-label">Data:</label>
                             <input type="date" class="form-control" id="txtData" name="txtData" required>
                         </div>
-                        <div class="col-sm-4 mt-2">
-                            <label for="txtPrestador" class="form-label">Prestador:</label>
-                            <input type="text" class="form-control" id="txtPrestador" name="txtPrestador" required>
-                        </div>
                         <div class="col-sm-2 mt-2">
                             <label for="txtValor" class="form-label">Valor:</label>
-                            <input type="number" class="form-control" id="txtValor" name="txtValor" step="0.01" required>
+                            <input type="number" class="form-control" id="txtValor" name="txtValor" placeholder="Digite o valor" step="0.01" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 mt-2">
                             <label for="txtDescricao" class="form-label">Descrição:</label>
-                            <textarea class="form-control" id="txtDescricao" name="txtDescricao" rows="3" required></textarea>
+                            <textarea class="form-control" id="txtDescricao" name="txtDescricao" placeholder="Digite a descrição sobre o serviço prestador ao condomínio" rows="3" required></textarea>
                         </div>
                     </div>
                     <div class="row mb-4">
@@ -130,6 +136,7 @@ if (!isset($_SESSION['usuario'])) {
                                     <tr>
                                         <th>Serviços</th>
                                         <th>Prestadores</th>
+                                        <th>CNPJ</th>
                                         <th>Data</th>
                                         <th>Valor</th>
                                     </tr>
@@ -139,6 +146,7 @@ if (!isset($_SESSION['usuario'])) {
                                     <tr>
                                         <td><?php echo $servico['servico']; ?></td>
                                         <td><?php echo $servico['prestador']; ?></td>
+                                        <td><?php echo $servico['cnpj']; ?></td>
                                         <td><?php echo $servico['data_servico']; ?></td>
                                         <td><?php echo $servico['valor']; ?></td>
                                     </tr>
@@ -146,14 +154,14 @@ if (!isset($_SESSION['usuario'])) {
                                 </tbody>
                                 <thead>
                                     <tr>
-                                        <th colspan="4">Descrição</th>
+                                        <th colspan="5">Descrição</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($servicos as $servico) { ?>
                                     <tr>
-                                        <td colspan="2"><?php echo $servico['prestador']; ?></td> 
-                                        <td colspan="2"><?php echo $servico['descricao']; ?></td> 
+                                        <td colspan="3"><?php echo $servico['prestador']; ?></td> 
+                                        <td colspan="3"><?php echo $servico['descricao']; ?></td> 
                                     </tr>
                                     <?php } ?>
                                 </tbody>
@@ -165,6 +173,7 @@ if (!isset($_SESSION['usuario'])) {
         </div>
     </div>
 
+    <script src="javascript/validation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
 </body>
 </html>
