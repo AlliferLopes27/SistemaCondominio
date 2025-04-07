@@ -4,6 +4,7 @@
     $servico = "";
     $data_servico = "";
     $prestador = "";
+    $cnpj = "";
     $valor = "";
     $descricao ="";
     $mensagem = "";
@@ -16,6 +17,7 @@
                 s.servico,
                 s.data_servico,
                 s.prestador,
+                s.cnpj,
                 s.valor,
                 s.descricao
             FROM 
@@ -32,15 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $sql = $conn->prepare('
                 INSERT INTO tab_servicos
-                    (servico, data_servico, prestador, valor, descricao)
+                    (servico, data_servico, prestador, cnpj, valor, descricao)
                 VALUES
-                    (:servico, :data_servico, :prestador, :valor, :descricao)
+                    (:servico, :data_servico, :prestador, :cnpj, :valor, :descricao)
             ');
 
             $sql->execute(array(
                 ':servico' => $_POST['txtServico'],
                 ':data_servico' => $_POST['txtData'],
                 ':prestador' => $_POST['txtPrestador'],
+                ':cnpj' => $_POST['txtCnpj'],
                 ':valor' => $_POST['txtValor'],
                 ':descricao' => $_POST['txtDescricao']
             ));
@@ -60,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $servico = "";
         $data_servico = "";
         $prestador = "";
+        $cnpj = "";
         $valor = "";
         $descricao = "";
     }
