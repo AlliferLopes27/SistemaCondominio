@@ -44,3 +44,6 @@ CREATE TABLE tab_servicos (
     valor DECIMAL(10,2) NOT NULL,
     descricao VARCHAR(255) NOT NULL
 );
+
+ALTER TABLE tab_servicos
+ADD cnpj VARCHAR(20) NOT NULL
