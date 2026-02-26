@@ -1,0 +1,12 @@
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('imagens/53f1fbbe-86fa-4482-89c8-d3a2ea1bf55b.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.sombraFundo{
+    background-color: silver;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
